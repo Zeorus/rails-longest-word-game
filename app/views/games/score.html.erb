@@ -1,0 +1,14 @@
+<div class="container mt-3">
+  <h1 class="fw-bold">Result</h1>
+  <br>
+  <% if @result[:win] == 1 %>
+  <p><strong>Congratulations!</strong> <%= params[:word].upcase %> is a valid English word!</p>
+  <p>Your score: <%= @result[:score] %> pts.</p>
+  <% elsif @result[:win] == 2 %>
+  <p>Sorry, no valid English word with <%= params[:grid].gsub(" ", ", ") %>.</p>
+  <% else %>
+  <p>Sorry but <strong><%= params[:word].upcase %></strong> can't be built out of <%= params[:grid].gsub(" ", ", ") %>.</p>
+  <% end %>
+  <br>
+  <p><%= link_to "Play again", "new" %></p>
+</div>
