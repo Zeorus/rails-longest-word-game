@@ -13,11 +13,8 @@ class GamesController < ApplicationController
     attempt = params[:word].upcase.split(//)
     # @all_existing_words = all_words(params[:grid].gsub(" ", "").split(//))
     word = parsing(params[:word])
-
-    if attempt.all? { |letter| attempt.count(letter) <= params[:grid].count(letter) } == true
-      if word["found"]
-        @result[:win] = 1
-      end
+    if attempt.all? { |letter| attempt.count(letter) <= params[:grid].count(letter) }
+      word["found"] ? @result[:win] = 1 : @result[:win] = 2
       @result[:score] = scoring(attempt)
     end
     return @result
