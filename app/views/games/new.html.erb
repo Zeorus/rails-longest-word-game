@@ -1,5 +1,6 @@
 <div class="container mt-3">
   <h1 class="fw-bold">New game</h1>
+  <p>Your current score: <%= session[:score].nil? ? 0 : session[:score] %> pts.</p> 
   <div id="list">
     <div id="firstLetters">
       <% @random_grid.each do |letter|  %>

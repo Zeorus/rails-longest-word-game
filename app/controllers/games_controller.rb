@@ -11,13 +11,18 @@ class GamesController < ApplicationController
   def score
     @result = { score: 0, win: 0 }
     attempt = params[:word].upcase.split(//)
-    # @all_existing_words = all_words(params[:grid].gsub(" ", "").split(//))
     word = parsing(params[:word])
     if attempt.all? { |letter| attempt.count(letter) <= params[:grid].count(letter) }
-      word["found"] ? @result[:win] = 1 : @result[:win] = 2
       @result[:score] = scoring(attempt)
+      if word["found"]
+        @result[:win] = 1
+        session[:score].nil? ? session[:score] = @result[:score] : session[:score] += @result[:score]
+      else
+        @result[:win] = 2
+        session[:score].nil? ? session[:score] = 0 : session[:score] -= @result[:score]
+        session[:score] = 0 if session[:score].negative?
+      end
     end
-    return @result
   end
 
   private
@@ -52,16 +57,4 @@ class GamesController < ApplicationController
     end
     return score
   end
-
-  def all_words(letters)
-    all_existing_words = []
-    possibles_words = letters.permutation.to_a.map(&:join)
-    possibles_words.each do |word|
-      if parsing(word)["found"]
-        all_existing_words << word
-      end
-    end
-    return all_existing_words
-  end
-
 end

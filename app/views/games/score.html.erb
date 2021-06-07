@@ -6,9 +6,12 @@
     <p>Your score: <%= @result[:score] %> pts.</p>
   <% elsif @result[:win] == 2 %>
     <p>Sorry, "<strong><%= params[:word].upcase %></strong>" is not a valid English word.</p>
+    <p>You loose: <%= @result[:score] %> pts.</p>
   <% else %>
+    <p>You loose: <%= @result[:score] %> pts.</p>
     <p>Sorry but "<strong><%= params[:word].upcase %></strong>" can't be built out of <%= params[:grid].gsub(" ", ", ") %>.</p>
   <% end %>
+    <p>Your total score: <%= session[:score] %> pts.</p>
   <br>
   <p><%= link_to "Play again", new_path %></p>
 </div>
